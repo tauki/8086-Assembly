@@ -163,6 +163,7 @@ endp main
     mov cx, 0
     call clear_screen
     printn "Invalid Input"
+    call main
   endp NotValid
 
 
