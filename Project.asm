@@ -7,7 +7,7 @@
 ;*                                                      *
 ;* Group Members:                                       *
 ;*----------------                                      *
-;*                                                       *
+;*                                                      *
 ;* Tauki Tahmid                                         *
 ;* ID: 15101051                                         *
 ;*                                                      *
@@ -33,7 +33,8 @@ include 'emu8086.inc'
 .model small
 .stack 100h
 
-.data  
+.data
+  newline db 13, 10, 0
   input dw  0
 
 .code   
@@ -69,11 +70,8 @@ include 'emu8086.inc'
     call scan_num       
     
     ;moving curser to the nextLine
-    mov ah,2
-    mov dl,13
-    int 21h 
-    mov dl,10
-    int 21h
+    mov si, offset newline
+    call print_string
     
     ;storing the input in "input"
     mov input, cx
