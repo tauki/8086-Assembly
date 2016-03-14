@@ -38,19 +38,19 @@ include 'emu8086.inc'
   mov ax,@data
   mov ds,ax
 
-;********************************************************
-;* Program #0 (main)
-;* 
-;* This program will prompt for what number'th program to exicute
-;* ie. if userInput is #1, the program will execute the first program which is printing fibonacci
-;*
-;* Program will exit upon entering 0 when asked
-;*
-;********************************************************
+;*****************************************************************************************************
+;* Program #0 (main)                                                                                 *
+;*                                                                                                   *
+;* This program will prompt for what number'th program to exicute                                    *
+;* ie. if userInput is #1, the program will execute the first program which is printing fibonacci    *
+;*                                                                                                   *
+;* Program will exit upon entering 0 when asked                                                      *
+;*                                                                                                   *
+;*****************************************************************************************************
 
 main proc
   ;getting number in CX.
-  CALL   scan_num       
+  call scan_num       
   
   ;moving curser to the nextLine
   mov ah,2
@@ -94,13 +94,13 @@ main proc
 endp main
 
 
-;********************************************************
-;* Program #1
-;*
-;* This program will prompt for the n'th number
-;* ie. if userInput is 10, the program will print the fibonacci series containing 10 numbers
-;*
-;********************************************************
+;*****************************************************************************************************
+;* Program #1                                                                                        *  
+;*                                                                                                   *
+;* This program will prompt for the n'th number                                                      *
+;* ie. if userInput is 10, the program will print the fibonacci series containing 10 numbers         *
+;*                                                                                                   *
+;*****************************************************************************************************
 
 Fibonacci proc
   
@@ -108,13 +108,13 @@ Fibonacci proc
 endp Fibonacci
 
 
-;********************************************************
-;* Program #2
-;*
-;* This program will prompt for a number to check if the number is HappyNumber
-;* ie. if userInput is 10, the program will check if 10 is a HappyNumber
-;*
-;******************************************************** 
+;*****************************************************************************************************
+;* Program #2                                                                                        *
+;*                                                                                                   *
+;* This program will prompt for a number to check if the number is HappyNumber                       *
+;* ie. if userInput is 10, the program will check if 10 is a HappyNumber                             *
+;*                                                                                                   *
+;*****************************************************************************************************
 
 HappyNumber proc
 
@@ -122,13 +122,13 @@ HappyNumber proc
 endp HappyNumber 
 
 
-;********************************************************
-;* Program #3
-;*
-;* This program will prompt for a number to check if the number is a PerfectNumber
-;* ie. if userInput is 10, the program will check if 10 is a PerfectNumber
-;*
-;********************************************************
+;*****************************************************************************************************
+;* Program #3                                                                                        *
+;*                                                                                                   *
+;* This program will prompt for a number to check if the number is a PerfectNumber                   *
+;* ie. if userInput is 10, the program will check if 10 is a PerfectNumber                           *
+;*                                                                                                   *
+;*****************************************************************************************************
 
 PerfectNumber proc
 
