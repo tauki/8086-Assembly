@@ -2,5 +2,5 @@
 
 # 'LabProject.asm Contains' <br/ >
 <li>Fibonacci seires</li>
-<li>Happy Numbers<li>
-<li>PerfectNumber<li>
+<li>Happy Numbers</li>
+<li>PerfectNumber</li>
