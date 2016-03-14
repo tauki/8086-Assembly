@@ -26,10 +26,11 @@
 ;********************************************************
 
 Title <> LabProject
+
 ; declarations
 include 'emu8086.inc'
-.model small
 
+.model small
 .stack 100h
 
 .data  
@@ -46,14 +47,15 @@ include 'emu8086.inc'
   DEFINE_PRINT_NUM_UNS  
   DEFINE_PTHIS
   DEFINE_CLEAR_SCREEN
+  DEFINE_GET_STRING
 
 ;*****************************************************************************************************
-;* Program #0 (main)                                                                                 *
+;* procedure #0 (main)                                                                               *
 ;*                                                                                                   *
-;* This program will prompt for what number'th program to exicute                                    *
+;* The program will prompt for what number'th program to exicute                                     *
 ;* ie. if userInput is #1, the program will execute the first program which is printing fibonacci    *
 ;*                                                                                                   *
-;* Program will exit upon entering -1 when asked                                                      *
+;* Program will exit upon entering -1 when asked                                                     *
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
@@ -105,58 +107,63 @@ include 'emu8086.inc'
     End:
       mov ah,4ch 
       int 21h
-  
-endp main
+    
+  endp main
 
 
 ;*****************************************************************************************************
-;* Program #1                                                                                        *  
+;* procedure #1                                                                                      *  
 ;*                                                                                                   *
-;* This program will prompt for the n'th number                                                      *
+;* This procedure will prompt for the n'th number                                                    *
 ;* ie. if userInput is 10, the program will print the fibonacci series containing 10 numbers         *
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
   Fibonacci proc
+    call clear_Screen
     
     call main 
   endp Fibonacci
 
 
 ;*****************************************************************************************************
-;* Program #2                                                                                        *
+;* procedure #2                                                                                      *
 ;*                                                                                                   *
-;* This program will prompt for a number to check if the number is HappyNumber                       *
+;* The program will prompt for a number to check if the number is HappyNumber                        *
 ;* ie. if userInput is 10, the program will check if 10 is a HappyNumber                             *
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
   HappyNumber proc
+    call clear_screen
     
     call main
   endp HappyNumber 
 
 
 ;*****************************************************************************************************
-;* Program #3                                                                                        *
+;* procedure #3                                                                                      *
 ;*                                                                                                   *
-;* This program will prompt for a number to check if the number is a PerfectNumber                   *
+;* The program will prompt for a number to check if the number is a PerfectNumber                    *
 ;* ie. if userInput is 10, the program will check if 10 is a PerfectNumber                           *
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
   PerfectNumber proc
+    call clear_screen
     
     call main
   endp PerfectNumber
 
 
 ;*****************************************************************************************************
-;* Procedure NotValid                 
-;*
-;* 
-;* 
-;*
+;* Procedure NotValid                                                                                *
+;*                                                                                                   *
+;* This procedure will be called upon invalid userInput (!(1,2,3))                                   *
+;* The program will clear the screen                                                                 *
+;* prompt "Invalid Input"                                                                            *
+;* And return to main                                                                                *
+;*                                                                                                   *
 ;*****************************************************************************************************
 
   NotValid proc
@@ -165,14 +172,6 @@ endp main
     printn "Invalid Input"
     call main
   endp NotValid
-
-
-;*****************************************************************************************************
-;* Procedure END                                                                                     *
-;*                                                                                                   *
-;* This Function will stop running the program and return control to the OS                          *
-;*                                                                                                   *
-;*****************************************************************************************************
 
 
 ;******************************************************
