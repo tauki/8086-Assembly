@@ -38,6 +38,14 @@ include 'emu8086.inc'
 .code   
   mov ax,@data
   mov ds,ax
+  
+  ;defining functions inherited from emu8086.inc
+  DEFINE_SCAN_NUM
+  DEFINE_PRINT_STRING
+  DEFINE_PRINT_NUM
+  DEFINE_PRINT_NUM_UNS  
+  DEFINE_PTHIS
+  DEFINE_CLEAR_SCREEN
 
 ;*****************************************************************************************************
 ;* Program #0 (main)                                                                                 *
@@ -45,49 +53,59 @@ include 'emu8086.inc'
 ;* This program will prompt for what number'th program to exicute                                    *
 ;* ie. if userInput is #1, the program will execute the first program which is printing fibonacci    *
 ;*                                                                                                   *
-;* Program will exit upon entering 0 when asked                                                      *
+;* Program will exit upon entering -1 when asked                                                      *
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-main proc
-  ;getting number in CX.
-  call scan_num       
+  main proc
+    printn "Input 1 for Fibonacci"
+    printn "Input 2 For HappyNumber"
+    printn "Input 3 For PerfectNumber"
+    printn "Input -1 to terminate the program"
+    
+    ;getting number in CX.
+    call scan_num       
+    
+    ;moving curser to the nextLine
+    mov ah,2
+    mov dl,13
+    int 21h 
+    mov dl,10
+    int 21h
+    
+    ;storing the input in "input"
+    mov input, cx
+   
+    ;deciding which proc to call (or if)
+    cmp cx, -1
+    je call End
+    
+    ;to call Fibonacci
+    mov cx, input
+    cmp cx, 1
+    je call Fibonacci
+    
+    ;to call HappyNumber
+    mov cx, input
+    cmp cx, 2
+    je call HappyNumber
+    
+    ;to call PerfectNumber
+    mov cx, input
+    cmp cx, 3
+    je call PerfectNumber 
+    
+    ;if number is not valid
+    call NotValid
+    
+    ;incase this happens
+    mov cx, 0
+    call main
+    
+    End:
+      mov ah,4ch 
+      int 21h
   
-  ;moving curser to the nextLine
-  mov ah,2
-  mov dl,13
-  int 21h 
-  mov dl,10
-  int 21h
-  
-  ;storing the input in "input"
-  mov input, cx
-
-  ;deciding which proc to call (or if)
-  
-  cmp cx, 0
-  je call End
-  
-  ;to call Fibonacci
-  mov cx, input
-  cmp cx, 1
-  je call Fibonacci
-  
-  ;to call HappyNumber
-  mov cx, input
-  cmp cx, 2
-  je call HappyNumber
-  
-  ;to call PerfectNumber
-  mov cx, input
-  cmp cx, 3
-  je call PerfectNumber 
-  
-  ;if number is not valid
-  mov cx, input
-  cmp cx, 3
-  jg call NotValid
-
 endp main
 
 
@@ -99,10 +117,10 @@ endp main
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-Fibonacci proc
-  
-  ret 
-endp Fibonacci
+  Fibonacci proc
+    
+    call main 
+  endp Fibonacci
 
 
 ;*****************************************************************************************************
@@ -113,10 +131,10 @@ endp Fibonacci
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-HappyNumber proc
-
-  ret
-endp HappyNumber 
+  HappyNumber proc
+    
+    call main
+  endp HappyNumber 
 
 
 ;*****************************************************************************************************
@@ -127,10 +145,10 @@ endp HappyNumber
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-PerfectNumber proc
-
-  ret
-endp PerfectNumber
+  PerfectNumber proc
+    
+    call main
+  endp PerfectNumber
 
 
 ;*****************************************************************************************************
@@ -141,10 +159,11 @@ endp PerfectNumber
 ;*
 ;*****************************************************************************************************
 
-NotValid proc
-  mov cx, 0
-  call main
-endp NotValid
+  NotValid proc
+    mov cx, 0
+    call clear_screen
+    printn "I
+  endp NotValid
 
 
 ;*****************************************************************************************************
@@ -153,19 +172,6 @@ endp NotValid
 ;* This Function will stop running the program and return control to the OS                          *
 ;*                                                                                                   *
 ;*****************************************************************************************************
-
-End proc
-  mov ah,4ch 
-  int 21h
-endp End
-
-
-;defining functions inherited from emu8086.inc
-DEFINE_SCAN_NUM
-DEFINE_PRINT_STRING
-DEFINE_PRINT_NUM
-DEFINE_PRINT_NUM_UNS  
-DEFINE_PTHIS
 
 
 ;******************************************************
