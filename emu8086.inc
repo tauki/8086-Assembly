@@ -34,11 +34,6 @@
 
 
 
-
-
-
-
-
 ; this macro prints a char in AL and advances
 ; the current cursor position:
 PUTC    MACRO   char
@@ -635,73 +630,3 @@ skip_proc_print_num_uns:
 
 DEFINE_PRINT_NUM_UNS    ENDM
 ;***************************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                                                                                                                           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                                                                                                                                                             
