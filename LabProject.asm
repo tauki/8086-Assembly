@@ -1,3 +1,4 @@
+Title <> LabProject
 ;********************************************************
 ;*              8086 Assembly program                   *
 ;*                                                      *
@@ -25,7 +26,6 @@
 ;********************************************************
 
 ; declarations
-
 include 'emu8086.inc'
 .model small
 
@@ -39,14 +39,18 @@ include 'emu8086.inc'
   mov ds,ax
 
 ;********************************************************
-; Program #0
-; This program will prompt for what number'th program to exicute
-; ie. if userInput is #1, the program will execute the first program which is printing fibonacci
-; Program will exit upon entering 0 when asked
+;* Program #0
+;* 
+;* This program will prompt for what number'th program to exicute
+;* ie. if userInput is #1, the program will execute the first program which is printing fibonacci
+;*
+;* Program will exit upon entering 0 when asked
+;*
 ;********************************************************
 
 main proc
-    CALL   scan_num       ; get number in CX.
+    ;getting number in CX.
+    CALL   scan_num       
     
     ;moving curser to the nextLine
     mov ah,2
@@ -58,17 +62,17 @@ main proc
     ;storing the input in "input"
     mov input, cx
     
-    ;deciding which proc to call
-    
-    cmp cx, bx
+    ;deciding which proc to call (or if)
+  
+    cmp cx, 0
     je end
-    
-    ;to call Fibonacci
+  
+  ;to call Fibonacci
     mov cx, input
     cmp cx, 1
     je call Fibonacci
     
-    ;to call HappyNumber
+   ;to call HappyNumber
     mov cx, input
     cmp cx, 2
     je call HappyNumber
@@ -90,11 +94,14 @@ main proc
 endp main
 
 
+
+
 ;********************************************************
-; Program #1
-; This program will prompt for the n'th number
-; ie. if userInput is 10, the program will print the fibonacci series containing 10 numbers
-; 
+;* Program #1
+;*
+;* This program will prompt for the n'th number
+;* ie. if userInput is 10, the program will print the fibonacci series containing 10 numbers
+;*
 ;********************************************************
 
 Fibonacci proc
@@ -104,10 +111,11 @@ endp Fibonacci
 
 
 ;********************************************************
-; Program #2
-; This program will prompt for a number to check if the number is HappyNumber
-; ie. if userInput is 10, the program will check if 10 is a HappyNumber
-; 
+;* Program #2
+;*
+;* This program will prompt for a number to check if the number is HappyNumber
+;* ie. if userInput is 10, the program will check if 10 is a HappyNumber
+;*
 ;******************************************************** 
 
 HappyNumber proc
@@ -117,10 +125,11 @@ endp HappyNumber
 
 
 ;********************************************************
-; Program #2
-; This program will prompt for a number to check if the number is a PerfectNumber
-; ie. if userInput is 10, the program will check if 10 is a PerfectNumber
-; 
+;* Program #3
+;*
+;* This program will prompt for a number to check if the number is a PerfectNumber
+;* ie. if userInput is 10, the program will check if 10 is a PerfectNumber
+;*
 ;********************************************************
 
 PerfectNumber proc
@@ -128,8 +137,28 @@ PerfectNumber proc
   ret
 endp PerfectNumber
 
+
+;********************************************************
+;* Procedure NotValid
+;*
+;* 
+;* 
+;*
+;********************************************************
+NotValid proc
+
+  ret
+endp NotValid
+
+;defining functions inherited from emu8086.inc
 DEFINE_SCAN_NUM
 DEFINE_PRINT_STRING
 DEFINE_PRINT_NUM
 DEFINE_PRINT_NUM_UNS  
 DEFINE_PTHIS
+
+;******************************************************
+;*                                                    *
+;*            END OF THE PROGRAM                      *
+;*                                                    *
+;******************************************************
