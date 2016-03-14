@@ -25,7 +25,7 @@
 ;*                                                      *
 ;********************************************************
 
-Title <> LabProject
+Title <> Project
 
 ; declarations
 include 'emu8086.inc'
@@ -49,6 +49,7 @@ include 'emu8086.inc'
   DEFINE_PTHIS
   DEFINE_CLEAR_SCREEN
   DEFINE_GET_STRING
+
 
 ;*****************************************************************************************************
 ;* procedure #0 (main)                                                                               *
