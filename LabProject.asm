@@ -1,12 +1,13 @@
 ;********************************************************
 ;*              8086 Assembly program                   *
 ;*                                                      *
-;*              Group Project - CSE341                  *
-;*                                                      *
+;*                  Group Project                       *
+;*               Course Code: CSE341                    *
+;*                 BRAC University                      *
 ;*                                                      *
 ;* Group Members:                                       *
 ;*----------------                                      *
-;*                                                      *
+;*                                                       *
 ;* Tauki Tahmid                                         *
 ;* ID: 15101051                                         *
 ;*                                                      *
@@ -65,7 +66,7 @@ main proc
   ;deciding which proc to call (or if)
   
   cmp cx, 0
-  je end
+  je call End
   
   ;to call Fibonacci
   mov cx, input
@@ -86,10 +87,6 @@ main proc
   mov cx, input
   cmp cx, 3
   jg call NotValid
-  
-  end:
-    mov ah,4ch 
-    int 21h
 
 endp main
 
@@ -136,19 +133,32 @@ PerfectNumber proc
 endp PerfectNumber
 
 
-;********************************************************
-;* Procedure NotValid
+;*****************************************************************************************************
+;* Procedure NotValid                 
 ;*
 ;* 
 ;* 
 ;*
-;********************************************************
+;*****************************************************************************************************
+
 NotValid proc
   mov cx, 0
   call main
-
-  ret
 endp NotValid
+
+
+;*****************************************************************************************************
+;* Procedure END                                                                                     *
+;*                                                                                                   *
+;* This Function will stop running the program and return control to the OS                          *
+;*                                                                                                   *
+;*****************************************************************************************************
+
+End proc
+  mov ah,4ch 
+  int 21h
+endp End
+
 
 ;defining functions inherited from emu8086.inc
 DEFINE_SCAN_NUM
@@ -156,6 +166,7 @@ DEFINE_PRINT_STRING
 DEFINE_PRINT_NUM
 DEFINE_PRINT_NUM_UNS  
 DEFINE_PTHIS
+
 
 ;******************************************************
 ;*                                                    *
