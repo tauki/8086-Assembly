@@ -39,7 +39,7 @@ include 'emu8086.inc'
   mov ds,ax
 
 ;********************************************************
-;* Program #0
+;* Program #0 (main)
 ;* 
 ;* This program will prompt for what number'th program to exicute
 ;* ie. if userInput is #1, the program will execute the first program which is printing fibonacci
@@ -49,51 +49,49 @@ include 'emu8086.inc'
 ;********************************************************
 
 main proc
-    ;getting number in CX.
-    CALL   scan_num       
-    
-    ;moving curser to the nextLine
-    mov ah,2
-    mov dl,13
-    int 21h 
-    mov dl,10
-    int 21h
-    
-    ;storing the input in "input"
-    mov input, cx
-    
-    ;deciding which proc to call (or if)
+  ;getting number in CX.
+  CALL   scan_num       
   
-    cmp cx, 0
-    je end
+  ;moving curser to the nextLine
+  mov ah,2
+  mov dl,13
+  int 21h 
+  mov dl,10
+  int 21h
+  
+  ;storing the input in "input"
+  mov input, cx
+
+  ;deciding which proc to call (or if)
+  
+  cmp cx, 0
+  je end
   
   ;to call Fibonacci
-    mov cx, input
-    cmp cx, 1
-    je call Fibonacci
-    
-   ;to call HappyNumber
-    mov cx, input
-    cmp cx, 2
-    je call HappyNumber
-    
-    ;to call PerfectNumber
-    mov cx, input
-    cmp cx, 3
-    je call PerfectNumber 
-    
-    ;if number is not valid
-    mov cx, input
-    cmp cx, 3
-    jg call NotValid
-    
-    end:
-      mov ah,4ch 
-      int 21h
-    
+  mov cx, input
+  cmp cx, 1
+  je call Fibonacci
+  
+  ;to call HappyNumber
+  mov cx, input
+  cmp cx, 2
+  je call HappyNumber
+  
+  ;to call PerfectNumber
+  mov cx, input
+  cmp cx, 3
+  je call PerfectNumber 
+  
+  ;if number is not valid
+  mov cx, input
+  cmp cx, 3
+  jg call NotValid
+  
+  end:
+    mov ah,4ch 
+    int 21h
+
 endp main
-
-
 
 
 ;********************************************************
@@ -146,6 +144,8 @@ endp PerfectNumber
 ;*
 ;********************************************************
 NotValid proc
+  mov cx, 0
+  call main
 
   ret
 endp NotValid
