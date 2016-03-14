@@ -162,7 +162,7 @@ endp main
   NotValid proc
     mov cx, 0
     call clear_screen
-    printn "I
+    printn "Invalid Input"
   endp NotValid
 
 
