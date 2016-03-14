@@ -1,4 +1,3 @@
-Title <> LabProject
 ;********************************************************
 ;*              8086 Assembly program                   *
 ;*                                                      *
@@ -25,6 +24,7 @@ Title <> LabProject
 ;*                                                      *
 ;********************************************************
 
+Title <> LabProject
 ; declarations
 include 'emu8086.inc'
 .model small
