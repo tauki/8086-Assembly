@@ -23,6 +23,7 @@
 ;* #2 - Checking if entered number is a HappyNumber     *
 ;* #3 - Checking if entered number is a PerfectNumber   *
 ;*                                                      *
+;*            Author: Tauki Tahmid                      *
 ;********************************************************
 
 Title <> Main
@@ -107,8 +108,39 @@ include 'emu8086.inc'
     call main
     
     End:
-      mov ah,4ch 
-      int 21h
+      call clear_screen
+      call reset_reg
+      printn "Are you sure you want to close the program? (y/n)"
+      input:
+        mov ah, 1
+        int 21h
+        mov cl, al
+        
+        mov al, 0
+        int 21h
+        cmp al, 13
+        
+        je finished
+        jmp wrong
+        
+      finished:
+        cmp cl, 'n'
+        je noEnd
+        
+        mov ah,4ch 
+        int 21h
+        
+      wrong:
+        call clear_screen
+        print "Wrong Input, enter either n or y : "
+        jmp input
+        
+      noEnd:
+        call clear_screen
+        printn "Returning to the program"
+        call clear_screen
+        call main
+
     
   endp main
 
@@ -211,7 +243,7 @@ include 'emu8086.inc'
   
   
 ;*****************************************************************************************************
-;* Procedure Reset_reg                                                                               *
+;* Procedure newLine                                                                                 *
 ;*                                                                                                   *
 ;* This procedure will move the curser to the next line and to the left-most edge                    *
 ;* And then, return to the calling procedure                                                         *
