@@ -111,7 +111,8 @@ include 'emu8086.inc'
       call clear_screen
       call reset_reg
       printn "Are you sure you want to close the program? (y/n)"
-      input:
+       
+      input:        
         mov ah, 1
         int 21h
         mov cl, al
@@ -119,8 +120,11 @@ include 'emu8086.inc'
         mov al, 0
         int 21h
         cmp al, 13
-        
         je finished
+        
+        cmp al, 8
+        je remove
+        
         jmp wrong
         
       finished:
@@ -130,9 +134,22 @@ include 'emu8086.inc'
         mov ah,4ch 
         int 21h
         
+      remove:
+        mov ah, 2
+        mov dl, 8
+        int 21h
+        mov dl, 32
+        int 21h
+        mov dl, 8
+        int 21h
+        
+        jmp input
+        
+        
+        
       wrong:
         call clear_screen
-        print "Wrong Input, enter either n or y : "
+        printn "Wrong Input, enter either n or y : "
         jmp input
         
       noEnd:
@@ -140,8 +157,7 @@ include 'emu8086.inc'
         printn "Returning to the program"
         call clear_screen
         call main
-
-    
+        
   endp main
 
 
@@ -222,7 +238,7 @@ include 'emu8086.inc'
 ;*****************************************************************************************************
 
   NotValid proc
-    call clear_reg
+    call reset_reg
     call clear_screen
     printn "Invalid Input"
     call main
