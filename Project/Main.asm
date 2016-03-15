@@ -127,13 +127,6 @@ include 'emu8086.inc'
         
         jmp wrong
         
-      finished:
-        cmp cl, 'n'
-        je noEnd
-        
-        mov ah,4ch 
-        int 21h
-        
       remove:
         mov ah, 2
         mov dl, 8
@@ -157,6 +150,13 @@ include 'emu8086.inc'
         printn "Returning to the program"
         call clear_screen
         call main
+        
+      finished:
+        cmp cl, 'n'
+        je noEnd
+        
+        mov ah,4ch 
+        int 21h
         
   endp main
 
