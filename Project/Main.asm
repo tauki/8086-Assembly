@@ -82,22 +82,19 @@ include 'emu8086.inc'
     mov userInput_main, cx
    
     ;deciding which proc to call (or if)
-    cmp cx, -1
+    cmp userInput_main, -1
     je call End
     
     ;to call Fibonacci
-    mov cx, userInput_main
-    cmp cx, 1
+    cmp userInput_main, 1
     je call Fibonacci
     
     ;to call HappyNumber
-    mov cx, userInput_main
-    cmp cx, 2
+    cmp userInput_main, 2
     je call HappyNumber
     
     ;to call PerfectNumber
-    mov cx, userInput_main
-    cmp cx, 3
+    cmp userInput_main, 3
     je call PerfectNumber 
     
     ;if number is not valid
@@ -124,8 +121,8 @@ include 'emu8086.inc'
         
         cmp al, 8
         je remove
-        
         jmp wrong
+       
         
       remove:
         mov ah, 2
@@ -139,17 +136,18 @@ include 'emu8086.inc'
         jmp input
         
         
-        
       wrong:
         call clear_screen
         printn "Wrong Input, enter either n or y : "
         jmp input
+        
         
       noEnd:
         call clear_screen
         printn "Returning to the program"
         call clear_screen
         call main
+      
         
       finished:
         cmp cl, 'n'
