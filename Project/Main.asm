@@ -23,7 +23,7 @@
 ;* #2 - Checking if entered number is a HappyNumber     *
 ;* #3 - Checking if entered number is a PerfectNumber   *
 ;*                                                      *
-;*            Author: Tauki Tahmid                      *
+;*                                                      *
 ;********************************************************
 
 Title <> Main
@@ -161,7 +161,8 @@ include 'emu8086.inc'
     call Reset_reg
     
     
-    call main 
+    call newLine
+    call main  
   endp Fibonacci
 
 
@@ -177,8 +178,11 @@ include 'emu8086.inc'
 ;*****************************************************************************************************
 
   HappyNumber proc
-    call clear_screen
+    call clear_Screen
+    call Reset_reg
     
+    
+    call newLine
     call main
   endp HappyNumber 
 
@@ -195,8 +199,11 @@ include 'emu8086.inc'
 ;*****************************************************************************************************
 
   PerfectNumber proc
-    call clear_screen
+    call clear_Screen
+    call Reset_reg
     
+    
+    call newLine
     call main
   endp PerfectNumber
 
@@ -215,7 +222,7 @@ include 'emu8086.inc'
 ;*****************************************************************************************************
 
   NotValid proc
-    mov cx, 0
+    call clear_reg
     call clear_screen
     printn "Invalid Input"
     call main
