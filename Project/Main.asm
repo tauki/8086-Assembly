@@ -25,7 +25,7 @@
 ;*                                                      *
 ;********************************************************
 
-Title <> Project
+Title <> Main
 
 ; declarations
 include 'emu8086.inc'
