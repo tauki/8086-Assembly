@@ -1,11 +1,11 @@
-# Project Information </br >
-#### Group Project: </br >
-##### `CSE341` </br >
-##### `BRAC UNIVERSITY` </br > </br >
-#### Group Members: </br > </br >
-##### <li>`Tauki Tahmid` </li></br>
+### Project Information
+#### Group Project:
+##### `CSE341`
+##### `BRAC UNIVERSITY` </br >
+#### Group Members: </br >
+##### <li>`Tauki Tahmid` </li>
 ##### ID: `15101051` </br > </br >
-##### <li>`Samin _______` </li></br >
+##### <li>`Samin _______` </li>
 ##### ID: `__________` </br >
 
 </br >
