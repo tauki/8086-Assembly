@@ -18,6 +18,8 @@
 <li> The variable `userInput_secondary` is to be used for inputs </li>
 <li> If the program to be included is to be included directly to the main program, it has to be in one single procedure, no more procedure will be included other than the present ones </li>
 <li> For other functions or procedures to be included if necessary only for the program, Some common functions that can make writing the program easily, which has (has to have) some significance or, which has to be used more than once in the program, can be included as a different procedure </li>
+<li> A list of all globally available procedures and macros is included in this file </li>
+<li> Future global procedures and macros (if there is any) will be included in this file after they are made </li>
 </br >
 ##### Available Global Procedures </br >
 <li> `main` - it will decide upon userInput_main </li>
