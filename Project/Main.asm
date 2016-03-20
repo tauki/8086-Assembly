@@ -99,9 +99,6 @@ include 'emu8086.inc'
     
     ;if number is not valid
     call NotValid
-    
-    ;incase this happens
-    mov cx, 0
     call main
     
     End:
@@ -228,7 +225,7 @@ include 'emu8086.inc'
 ;* This procedure will be called upon invalid userInput (!(1,2,3))                                   *
 ;* The program will clear the screen                                                                 *
 ;* prompt "Invalid Input"                                                                            *
-;* And return to main                                                                                *
+;* And return to the calling procedure, so you'll have to re-direct your desired way indirectly                                                                               *
 ;*                                                                                                   *
 ;* #calling procedure: call NotValid                                                                 *
 ;* #Defining procedure: define_NotValid                                                              *
@@ -239,7 +236,7 @@ include 'emu8086.inc'
     call reset_reg
     call clear_screen
     printn "Invalid Input"
-    call main
+    ret
   endp NotValid
  
   
