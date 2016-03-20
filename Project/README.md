@@ -23,7 +23,7 @@
 </br >
 ##### Available Global Procedures </br >
 <li> `main` - it will decide upon userInput_main </li>
-<li> `NotValid` - this proc will clear the screen and print NotValid, and will return to the main procedure (needs to be fixed so that other procedures can use it to revoke invalid inputs)</li>
+<li> `NotValid` - this proc will clear the screen and print NotValid, and will return to the calling procedure</li>
 <li> `reset_reg` - this procedure will reset every general purpose registers to 0 and return to the calling procedure </li>
 <li> `newLine` - this procedure will print a new Line (will move the curser to the next Line) and return to the calling procedure </li>
 <li> `Fibonacci` - this procedure will handle Fibonacci related functions and return to main afterward</li>
