@@ -37,6 +37,9 @@ include 'emu8086.inc'
 .data
   userInput_main dw  0
   userInput_secondary dw 0
+  seconds dw 0
+    second_count dw 0
+  count dw 0 ; reset it to 0 after every use
 
 .code   
   mov ax,@data
@@ -141,15 +144,15 @@ include 'emu8086.inc'
         
       noEnd:
         call clear_screen
-        print "Returning to the program"
-        call clear_screen
-        print "Returning to the program"
-        call delay
-        putc '.'
-        call delay
-        putc '.'
-        call delay
-        putc '.'
+        print "Returning to the program "
+        dots:
+          mov seconds, 1
+          call delay
+          putc '.'
+          inc count
+          cmp count, 3
+          jl dots
+          mov count, 0
         call delay        
         call clear_screen
         call main
@@ -298,15 +301,29 @@ include 'emu8086.inc'
 ;* And then it will return to the calling procedure to execute the next instruction                  *
 ;*                                                                                                   *
 ;* #calling procedure: call delay                                                                    *
+;*  * initially, upon calling the procedure, it will set the second_count to 0 before beginning      *
+;*    * reason: stupidity                                                                            *
+;*  * use the defined variable seconds to set how long you want the program to delay (in seconds)    *
+;*  * don't use the variable seconds for other purposes                                              *
+;*  * the procedure will reset seconds to 0 everytime you call the it                                *
+;*  * the procedure will reset second_count to 0 upon calling it after the delaying is done          *
 ;* #Defining procedure: define_delay                                                                 *
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
   delay proc
-    MOV     CX, 0FH
-    MOV     DX, 4240H
-    MOV     AH, 86H
-    INT     15H
+    mov second_count, 0
+    mov bx, seconds
+    start_delay:
+      mov cx, 0Fh
+      mov dx, 4240h
+      mov ah, 86H
+      int 15h
+      inc second_count
+      cmp second_count, bx
+      jl start_delay
+    mov second_count, 0
+    mov seconds, 0
     ret 
   endp delay
   
