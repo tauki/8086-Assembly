@@ -141,7 +141,16 @@ include 'emu8086.inc'
         
       noEnd:
         call clear_screen
-        printn "Returning to the program"
+        print "Returning to the program"
+        call clear_screen
+        print "Returning to the program"
+        call delay
+        putc '.'
+        call delay
+        putc '.'
+        call delay
+        putc '.'
+        call delay        
         call clear_screen
         call main
       
@@ -281,6 +290,27 @@ include 'emu8086.inc'
   endp newLine
 
 
+;*****************************************************************************************************
+;* Procedure delay                                                                                   *
+;*                                                                                                   *
+;* This procedure interrupt the process for 1 second or 1 million micro-seconds                      *
+;* Upon calling this, the program will wait for 1 second                                             *
+;* And then it will return to the calling procedure to execute the next instruction                  *
+;*                                                                                                   *
+;* #calling procedure: call delay                                                                    *
+;* #Defining procedure: define_delay                                                                 *
+;*                                                                                                   *
+;*****************************************************************************************************
+
+  delay proc
+    MOV     CX, 0FH
+    MOV     DX, 4240H
+    MOV     AH, 86H
+    INT     15H
+    ret 
+  endp delay
+  
+  
 ;******************************************************
 ;*                                                    *
 ;*               END OF THE PROGRAM                   *
