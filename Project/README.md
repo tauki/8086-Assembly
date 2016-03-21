@@ -16,6 +16,8 @@
 <li> Variables are defined </li>
 <li> The variable called `userInput_main` will be used to take input from main procedure, using which the user will decide which procedure to run </li>
 <li> The variable `userInput_secondary` is to be used for inputs </li>
+<li> The variable `seconds` will be used to count execution delays for the `delay proc`</li>
+<li> The variable `second_count` is not to be used/changed since this variable is only to be used by the procedure `delay`.
 <li> If the program to be included is to be included directly to the main program, it has to be in one single procedure, no more procedure will be included other than the present ones </li>
 <li> For other functions or procedures to be included if necessary only for the program, Some common functions that can make writing the program easily, which has (has to have) some significance or, which has to be used more than once in the program, can be included as a different procedure </li>
 <li> A list of all globally available procedures and macros is included in this file </li>
@@ -30,6 +32,7 @@
 <li> `Fibonacci` - this procedure will handle Fibonacci related functions and return to main afterward</li>
 <li> `HappyNumber` - this procedure will handle Happy Number related functions and return to main afterward </li>
 <li> `PerfectNumber` - this procedure will handle Perfect Number related functions and return to main afterward </li>
+<li> `delay` - this procedure will delay execution of the next instruction, of specified seconds, the `seconds` variable should be initialized at first in order to specify the required delay (in seconds)</li>
 </br >
 ##### Available Global procedures Imported from `emu8086.inc` </br >
 <li>`scan_num` - to take number inputs from user. procedure will get the multi-digit SIGNED number from the keyboard, and stores the result in CX register.</li>
