@@ -11,9 +11,11 @@
 ;* Tauki Tahmid                                         *
 ;* ID: 15101051                                         *
 ;*                                                      *
-;* Samin -------                                        *
-;* ID: --------                                         *
+;* Samin Azhan                                          *
+;* ID: 14101005                                         *
 ;*                                                      *
+;* Al Faysal Bin Asad                                   *
+;* ID: 13101095                                         *
 ;*                                                      *
 ;* Project:                                             *
 ;*----------                                            *
@@ -40,6 +42,9 @@ include 'emu8086.inc'
   seconds dw 0
     second_count dw 0
   count dw 0 ; reset it to 0 after every use
+  
+  sum dw 0
+  a dw 100 up(0)d
 
 .code   
   mov ax,@data
@@ -67,8 +72,8 @@ include 'emu8086.inc'
 ;* #Defining procedure: define_main                                                                  *
 ;*                                                                                                   *
 ;*****************************************************************************************************
-  
-  main proc
+printn "Welcome!"  
+main proc
    
     printn "Input 1 for Fibonacci"
     printn "Input 2 For HappyNumber"
@@ -162,10 +167,12 @@ include 'emu8086.inc'
         cmp cl, 'n'
         je noEnd
         
+        call clear_screen
+        print "Thank you for using this program!"
         mov ah,4ch 
         int 21h
         
-  endp main
+endp main
 
 
 ;*****************************************************************************************************
@@ -179,14 +186,14 @@ include 'emu8086.inc'
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-  Fibonacci proc
+Fibonacci proc
     call clear_Screen
     call Reset_reg
     
     
     call newLine
     call main  
-  endp Fibonacci
+endp Fibonacci
 
 
 ;*****************************************************************************************************
@@ -200,14 +207,14 @@ include 'emu8086.inc'
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-  HappyNumber proc
+HappyNumber proc
     call clear_Screen
     call Reset_reg
     
     
     call newLine
     call main
-  endp HappyNumber 
+endp HappyNumber 
 
 
 ;*****************************************************************************************************
@@ -221,14 +228,98 @@ include 'emu8086.inc'
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-  PerfectNumber proc
+PerfectNumber proc
+  call clear_Screen
+  call Reset_reg
+    
+    printn "Enter number to check if it is Perfect or not"
+    
+    CALL scan_num
+    mov userInput_secondary, cx
+    
+    cmp userInput_secondary, 0
+    JG begin
+    call NotValid
     call clear_Screen
     call Reset_reg
+    call PerfectNumber
     
+    begin:
+        mov SI,0
+            
+        initialize_array:    
+            
+            mov a[SI],0
+            inc SI
+            inc SI
+            cmp SI,200
+            JL initialize_array
+            
+        mov sum,0
+        mov BX,1
+        mov SI,0
+        mov CX, userInput_secondary
+        mov DX,0
+        
+        find_divisors:
+            
+            cmp BX,CX
+            JGE check
+            mov AX,userInput_secondary
+            mov DX,0
+            div BX        
+            cmp DX,0        
+            JE array_add
+            inc BX
+            JMP find_divisors
+        
+        array_add:
+            mov a[SI],BX
+            inc SI
+            inc SI
+            inc BX
+            JMP find_divisors
+            
+        check:
+            mov SI,0
+            start_check:
+                cmp a[SI],0
+                JE  final_check
+                mov BX,a[SI]
+                add sum,BX
+                inc SI
+                inc SI
+                JMP start_check    
+            
+        final_check:
+            mov CX,userInput_secondary
+            cmp CX,sum
+            JE print_yes
+            
+            call newLine
+            print "No, that is not a perfect number."
     
-    call newLine
-    call main
-  endp PerfectNumber
+            JMP end_perfect
+               
+        print_yes:
+            
+            call newLine
+            print "Yes! That is a perfect number."
+    
+            JMP end_perfect
+            
+        end_perfect:
+            call newLine
+            call newLine
+            printn "Input 0 to check more perfect numbers"
+            printn "Input -1 to return the main program"
+            
+            call scan_num
+            cmp cx,-1
+            je call main
+            jmp call PerfectNumber
+ 
+endp PerfectNumber
 
 
 ;*****************************************************************************************************
@@ -244,12 +335,12 @@ include 'emu8086.inc'
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-  NotValid proc
+NotValid proc
     call reset_reg
     call clear_screen
     printn "Invalid Input"
     ret
-  endp NotValid
+endp NotValid
  
   
 ;*****************************************************************************************************
@@ -263,13 +354,13 @@ include 'emu8086.inc'
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-  Reset_reg proc
+Reset_reg proc
     mov ax, 0
     mov bx, 0
     mov cx, 0
     mov dx, 0
     ret
-  endp Reset_reg
+endp Reset_reg
   
   
 ;*****************************************************************************************************
@@ -283,14 +374,14 @@ include 'emu8086.inc'
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-  newLine proc
+newLine proc
     mov ah, 2
     mov dl, 10
     int 21h
     mov dl, 13
     int 21h
     ret
-  endp newLine
+endp newLine
 
 
 ;*****************************************************************************************************
@@ -311,7 +402,7 @@ include 'emu8086.inc'
 ;*                                                                                                   *
 ;*****************************************************************************************************
 
-  delay proc
+delay proc
     mov second_count, 0
     mov bx, seconds
     start_delay:
@@ -325,7 +416,7 @@ include 'emu8086.inc'
     mov second_count, 0
     mov seconds, 0
     ret 
-  endp delay
+endp delay
   
   
 ;******************************************************
