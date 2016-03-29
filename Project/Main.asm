@@ -72,7 +72,7 @@ include 'emu8086.inc'
 ;* #Defining procedure: define_main                                                                  *
 ;*                                                                                                   *
 ;*****************************************************************************************************
-printn "Welcome!"  
+ 
 main proc
    
     printn "Input 1 for Fibonacci"
