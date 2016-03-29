@@ -311,13 +311,17 @@ PerfectNumber proc
         end_perfect:
             call newLine
             call newLine
-            printn "Input 0 to check more perfect numbers"
+            printn "Input enter to check more perfect numbers"
             printn "Input -1 to return the main program"
             
             call scan_num
             cmp cx,-1
             je call main
-            jmp call PerfectNumber
+            
+            cmp cx, 0
+            je call PerfectNumber
+            call NotValid
+            jmp end_perfect
  
 endp PerfectNumber
 
