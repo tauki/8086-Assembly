@@ -36,15 +36,23 @@ include 'emu8086.inc'
 .model small
 .stack 100h
 
-.data
-  userInput_main dw  0
+.data 
+  ;global variable/ data declaration
+  userInput_main dw  0 ; this variable is for the main function's use only
   userInput_secondary dw 0
   seconds dw 0
     second_count dw 0
   count dw 0 ; reset it to 0 after every use
+  sum dw 0 
   
-  sum dw 0
-  a dw 100 up(0)d
+  ;data initializing segment for PerfectNumber
+  a dw 100 dup(0)  
+  
+  ;dara initializing segment for FibonacciSeries
+  first db  dup (0)
+  second db dup (0)
+  
+  ;data initializing segment for HappyNumber
 
 .code   
   mov ax,@data
@@ -188,7 +196,17 @@ endp main
 
 Fibonacci proc
     call clear_Screen
-    call Reset_reg
+    call Reset_reg 
+    
+    printn ""
+    call scan_num
+    call newLine
+    mov userInput_secondary, cx
+    cmp userInput_secondary, 0
+    jle call NotValid
+    cmp userInput_secondary, 9999
+    jg call NotValid
+    
     
     
     call newLine
