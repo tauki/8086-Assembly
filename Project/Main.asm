@@ -49,8 +49,8 @@ include 'emu8086.inc'
   a dw 100 dup(0)  
   
   ;dara initializing segment for FibonacciSeries
-  first db  dup (0)
-  second db dup (0)
+  first db 210 dup (0)
+  second db 210 dup (0)
   
   ;data initializing segment for HappyNumber
 
@@ -207,10 +207,53 @@ Fibonacci proc
     cmp userInput_secondary, 9999
     jg call NotValid
     
+    mov second[209], 1
+    cmp userInput_secondary, 1
+    je one
+    
+    process:
     
     
-    call newLine
-    call main  
+        dealZeros:
+        
+        
+    jmp end_fib    
+    
+    one:
+        mov ax, 0
+        call print_num
+        jmp end_fib
+        
+    end_fib:
+        call newLine
+        printn "Do you wan't to print any more fibonacci series?"
+        printn "Press enter/input 0 to print more fibonacci series"
+        printn "input -1 to terminate fibonacci"
+        
+        call scan_num
+        cmp cx, 0
+        je call Fibonacci
+             
+        cmp cx, -1
+        je terminate
+        
+        call NotValid
+        jmp end_fib
+        
+        terminate: 
+            call newLine
+            print "terminating fibonacci" 
+            dot:
+                mov seconds, 1
+                call delay
+                putc '.'
+                inc count
+                cmp count, 3
+                jl dots
+                mov count, 0
+            call delay
+            call clear_screen
+            call main  
 endp Fibonacci
 
 
