@@ -299,7 +299,9 @@ Fibonacci proc
     one:
         inc count
         mov ax, count
+        print "("
         call print_num
+        print ")"
         print " : "
         mov ax, 0
         call print_num       
