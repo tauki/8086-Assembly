@@ -34,7 +34,7 @@ Title <> Main
 include 'emu8086.inc'
 
 .model small
-.stack 100h
+.stack 9999h
 
 .data 
   ;global variable/ data declaration
@@ -49,8 +49,10 @@ include 'emu8086.inc'
   a dw 100 dup(0)  
   
   ;dara initializing segment for FibonacciSeries
-  first db 210 dup (0)
-  second db 210 dup (0)
+  first db 210 dup(0)
+  second db 210 dup(0)
+  temp db 210 dup(0) 
+  carry db 0
   
   ;data initializing segment for HappyNumber
 
@@ -112,7 +114,7 @@ main proc
     ;to call PerfectNumber
     cmp userInput_main, 3
     je call PerfectNumber 
-    
+  
     ;if number is not valid
     call NotValid
     call main
@@ -196,33 +198,113 @@ endp main
 
 Fibonacci proc
     call clear_Screen
-    call Reset_reg 
-    
+    call Reset_reg
+    mov si, 0
+    initialize_array_fib:
+        mov first[si], 0
+        mov temp[si], 0
+        mov second[si], 0
+        inc si
+        cmp si, 210
+        jl initialize_array_fib
+        jmp init_end    
+         
+    init_end:
     printn ""
     call scan_num
     call newLine
+    
+    printn "Printing fibonacci series till the defined'th value"
+    call newLine
+    
     mov userInput_secondary, cx
     cmp userInput_secondary, 0
     jle call NotValid
     cmp userInput_secondary, 9999
     jg call NotValid
+    mov count, 0
     
-    mov second[209], 1
-    cmp userInput_secondary, 1
-    je one
+    mov si, 209
+    mov second[si], 1  
+   
+    mov si, 0
+    jmp one
     
     process:
-    
-    
+        call newLine
+        call Reset_reg 
+        mov cx, userInput_secondary
+                
+        cmp count, cx
+        jge end_fib
+        
+        mov si, 209
+        mov ax, 0
+        mov di, 0
+        move:
+            
+            mov ax, 0
+            mov al, first[si]
+            mov temp[si], al
+            mov ax, 0
+            mov al, second[si]
+            mov first[si], al
+            
+            mov ax, 0
+            mov al, temp[si]
+            add al, second[si]
+            add al, carry
+            cmp al, 10
+            jge setCarry_eg
+            cmp al, 10
+            jl setCarry_less
+            
+            setCarry_eg:
+                sub al, 10
+                mov carry, 1d
+                jmp summing
+            setCarry_less:
+                mov carry, 0
+                jmp summing
+            summing:
+                mov second[si], al
+                     
+            dec si
+            
+            cmp si, 0
+            jg move 
+            
+            jmp dealZeros
+        
+        
         dealZeros:
+            call Reset_reg
+            mov si, 0 
+            inc count
+            jmp start_deal
         
-        
-    jmp end_fib    
+        start_deal:        
+                call Reset_reg
+                cmp first[si], 0
+                jg print_start
+                inc si
+                jmp start_deal
+            
+        print_start:
+            cmp si, 210
+            jge process
+            mov ax, 0
+            mov al, 0
+            mov al, first[si]
+            call print_num
+            inc si
+            jmp print_start    
     
     one:
         mov ax, 0
         call print_num
-        jmp end_fib
+        inc count       
+        jmp process
         
     end_fib:
         call newLine
@@ -482,7 +564,6 @@ delay proc
     mov seconds, 0
     ret 
 endp delay
-  
   
 ;******************************************************
 ;*                                                    *
