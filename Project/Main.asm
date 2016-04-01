@@ -322,7 +322,7 @@ Fibonacci proc
                 putc '.'
                 inc count
                 cmp count, 3
-                jl dots
+                jl dot
                 mov count, 0
             call delay
             call clear_screen
