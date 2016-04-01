@@ -317,6 +317,7 @@ Fibonacci proc
             call newLine
             print "terminating fibonacci" 
             dot:
+                mov count, 0
                 mov seconds, 1
                 call delay
                 putc '.'
