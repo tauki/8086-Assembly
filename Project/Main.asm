@@ -200,17 +200,8 @@ Fibonacci proc
     call clear_Screen
     call Reset_reg
     mov si, 0
-    initialize_array_fib:
-        mov first[si], 0
-        mov temp[si], 0
-        mov second[si], 0
-        inc si
-        cmp si, 210
-        jl initialize_array_fib
-        jmp init_end    
-         
-    init_end:
-    printn ""
+    
+    printn "Input n"
     call scan_num
     call newLine
     
