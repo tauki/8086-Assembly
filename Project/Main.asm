@@ -214,7 +214,7 @@ Fibonacci proc
     call scan_num
     call newLine
     
-    printn "Printing fibonacci series till the defined'th value"
+    printn "Printing fibonacci series till the above defined value"
     call newLine
     
     mov userInput_secondary, cx
