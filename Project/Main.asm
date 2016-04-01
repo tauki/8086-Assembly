@@ -201,11 +201,11 @@ Fibonacci proc
     call Reset_reg
     mov si, 0
     
-    printn "Input n"
+    printn ""
     call scan_num
     call newLine
     
-    printn "Printing fibonacci series till the above defined value"
+    printn "Printing fibonacci series till the defined'th value"
     call newLine
     
     mov userInput_secondary, cx
@@ -269,9 +269,14 @@ Fibonacci proc
         
         
         dealZeros:
-            call Reset_reg
+            call Reset_reg 
             mov si, 0 
             inc count
+            print "("
+            mov ax, count
+            call print_num
+            print ")"
+            print " : " 
             jmp start_deal
         
         start_deal:        
@@ -292,9 +297,12 @@ Fibonacci proc
             jmp print_start    
     
     one:
-        mov ax, 0
+        inc count
+        mov ax, count
         call print_num
-        inc count       
+        print " : "
+        mov ax, 0
+        call print_num       
         jmp process
         
     end_fib:
