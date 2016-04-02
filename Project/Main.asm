@@ -60,6 +60,15 @@ include 'emu8086.inc'
   ;1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49, 68, 70, 79, 82, 86, 91, 94, 97, 100
   digits dw 4 dup(0) 
   first_ten dw 11 dup(0)
+  
+  s1 dw 0
+    s2 dw 0
+    s3 dw 0
+    r1 dw 0
+    r2 dw 0
+    r3 dw 0
+    sumh dw 0
+    ahappy db 101 dup(0)
 
 .code   
   mov ax,@data
@@ -87,9 +96,10 @@ include 'emu8086.inc'
 ;* #Defining procedure: define_main                                                                  *
 ;*                                                                                                   *
 ;*****************************************************************************************************
- 
-main proc
    
+main proc
+    
+    call clear_screen
     printn "Input 1 for Fibonacci"
     printn "Input 2 For HappyNumber"
     printn "Input 3 For PerfectNumber"
@@ -371,10 +381,260 @@ HappyNumber proc
     mov first_ten[si], 1    
     ;ending first 10 happyNumber initialization
     
+    call Reset_reg
+    mov AL,1
+    mov ahappy[1],AL
+    mov ahappy[7],AL
+    mov ahappy[10],AL             
+   
+            mov SI,11
+            mov BP,SI
+            build_array:
+
+            mov BX,10
+            
+            go:
+                mov AX,BP
+                mov DX,0
+                div BX
+                
+                mov DI,1
+                mov r1,DX
+            
+                square1:                
+                    cmp DI,r1
+                    JGE outS1
+                    add DX,r1
+                    inc DI
+                    JMP square1
+                    
+                outS1:
+                    mov s1,DX
+                    cmp AX,0
+                    JE sumup
+                    
+                    mov BX,10
+                    mov DX,0
+                    div BX
+                    
+                    mov DI,1
+                    mov r2,DX
+            
+                square2:                
+                    cmp DI,r2
+                    JGE outS2
+                    add DX,r2
+                    inc DI
+                    JMP square2
+                    
+                
+                outS2:    
+                    mov s2,DX
+                    cmp AX,0
+                    JE sumup
+                    
+                    mov BX,10
+                    mov DX,0
+                    div BX
+                    
+                    mov DI,1
+                    mov r3,DX
+                
+                square3:                
+                    cmp DI,r3
+                    JGE outS3
+                    add DX,r3
+                    inc DI
+                    JMP square3
+                    
+                outS3:
+                    mov s3,DX    
+                    JMP sumup                               
+                    
+                sumup:
+                    mov sumh,0
+                    mov DX,s1
+                    add sumh,DX
+                    
+                    mov DX,s2
+                    add sumh,DX
+                    
+                    mov DX,s3
+                    add sumh,DX
+                    
+                    mov s1,0
+                    mov s2,0
+                    mov s3,0
+            
+            ;mov AX,sum
+            ;call print_num
+            
+            
+            mov BP,sumh
+            cmp BP,10
+            JG go
+            
+            mov DI,BP
+            cmp ahappy[DI],1
+            JE set1
+            JMP move_on
+            
+            set1:
+                mov ahappy[SI],1
+                JMP move_on
+                
+            
+            move_on:
+            inc SI
+            mov BP,SI
+            cmp SI,100
+            JLE build_array
+            
+            mov SI,0
+    start:
+        cmp SI,100
+        JG endh
+        mov AL,ahappy[SI]
+        mov AH,0
+        ;call print_num
+        
+;        mov ah,2
+;        mov dl,13
+;        int 21h
+;        mov ah,2
+;        mov dl,10
+;        int 21h
+;        
+        
+        inc SI
+        jmp start
+        
+        endh:
     
     
+    ;initialization of 100 happyNumber starts from here
+    ;1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49, 68, 70, 79, 82, 86, 91, 94, 97, 100 
+    ;mov si, 2
+;    mov first_hundred[si], 1
+;    mov si, 18
+;    mov first_hundred[si], 1
+;    mov si, 24
+;    mov first_hundred[si], 1
+;    mov si, 36
+;    mov first_hundred[si], 1
+    
+    ;initialization of 100 happyNumber ends here
+    checkHappy:
+    printn "Input number to check if it's Happy or not"
+    call scan_num
     call newLine
-    call main
+    
+    printn "The number you entered is :" 
+    
+    ;mov userInput_secondary, cx
+;    call reset_reg
+;    mov ax, userInput_secondary
+;    mov bx, 10
+;    mov si, 7
+;    jmp digit_sep
+;    digit_sep:
+;         cmp ax, 0
+;         jle sep_end
+;         
+;         div bx
+;         mov digits[si], dx
+;         dec si
+;         dec si
+;         jmp digit_sep
+;    
+;    sep_end:
+;        mov ax, 0
+;        mov si, 0
+;        mov cx, 0
+;        jmp start_process_sum
+;        
+;    start_process_sum:
+;        mov ax, digits[si]
+;        mul ax
+;        add sum, ax 
+;        ;;
+;        call print_num
+;        cmp cx, 4
+;        je start_digit_count
+;        inc si
+;        inc si
+;        inc cx
+;        jmp start_process_sum
+;        
+;    start_digit_count:
+;        cmp sum, 100
+;        jle start_process_det
+;        mov ax, 0
+;        mov ax, sum
+;        jmp digit_sep
+;        
+;    start_process_det:
+;        mov ax, 0
+;        mov ax, sum
+;        call print_num 
+;        mov bx, 2
+;        mul bx
+;        sub ax, bx
+;        mov si, ax
+        mov si,cx
+        cmp ahappy[si], 1
+        je print_yes_hp
+        jmp print_no_hp
+        
+    print_yes_hp:
+        print "Happy!" 
+        call newLine
+        jmp end_happyNumber
+        
+    print_no_hp:
+        print "Not Happy!"
+        call newLine
+        jmp end_happyNumber
+        
+    end_happyNumber:
+        printn "Do you wish to continue using this program or return to the main?"
+        printn "press enter or input 0 to return check more numbers if they're happy or not"
+        printn "Input -1 to terminate happyNumber and return to main"
+        
+        call Reset_reg
+        
+        call scan_num
+        call newLine
+        
+        cmp cx, -1
+        je call main
+        
+        cmp cx, 0
+        je  not_terminate_hp
+        
+        call NotValid
+        jmp end_happyNumber
+        
+    not_terminate_hp:
+        call clear_screen
+        call Reset_reg
+        jmp checkHappy      
+        
+    terminate_happyNumber:
+        call newLine
+        print "terminating HappyNumber" 
+        dot_hp:
+            mov count, 0
+            mov seconds, 1
+            call delay
+            putc '.'
+            inc count
+            cmp count, 3
+            jl dot_hp
+            mov count, 0
+        call delay
+        call clear_screen
+        call main 
 endp HappyNumber 
 
 
@@ -472,7 +732,7 @@ PerfectNumber proc
         end_perfect:
             call newLine
             call newLine
-            printn "Input enter to check more perfect numbers"
+            printn "Press the enter key to check more perfect numbers"
             printn "Input -1 to return the main program"
             
             call scan_num
