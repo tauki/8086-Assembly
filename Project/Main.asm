@@ -55,6 +55,11 @@ include 'emu8086.inc'
   carry db 0
   
   ;data initializing segment for HappyNumber
+  first_hundred dw 100 dup(0)
+  first_hundre_happy dw 20 dup(0)
+  ;1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49, 68, 70, 79, 82, 86, 91, 94, 97, 100
+  digits dw 4 dup(0) 
+  first_ten dw 11 dup(0)
 
 .code   
   mov ax,@data
