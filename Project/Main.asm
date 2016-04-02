@@ -318,12 +318,12 @@ Fibonacci proc
         je call Fibonacci
              
         cmp cx, -1
-        je terminate
+        je terminate_fib
         
         call NotValid
         jmp end_fib
         
-        terminate: 
+        terminate_fib: 
             call newLine
             print "terminating fibonacci" 
             dot:
