@@ -356,6 +356,17 @@ HappyNumber proc
     call clear_Screen
     call Reset_reg
     
+    ;first 10 happyNumber initialization
+    mov count, 0
+    mov si, 2
+    mov first_ten[si], 1
+    mov si, 13
+    mov first_ten[si], 1
+    mov si, 18
+    mov first_ten[si], 1    
+    ;ending first 10 happyNumber initialization
+    
+    
     
     call newLine
     call main
