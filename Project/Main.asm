@@ -19,7 +19,10 @@
 ;*                                                      *
 ;* Project:                                             *
 ;*----------                                            *
-;* Status: Ongoing                                      *
+;* Status: Submitted                                    *
+;* Submission - done - submitted mainS.asm              *
+;* Project - ? - not entirely                           *
+;*----------                                            *
 ;*                                                      *
 ;* #1 - Printing fibonacci till n'th count              *
 ;* #2 - Checking if entered number is a HappyNumber     *
